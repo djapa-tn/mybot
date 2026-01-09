@@ -2,7 +2,7 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const express = require("express");
 const app = express();
 
-// إنشاء البوت مع النوايا المطلوبة
+// إنشاء البوت
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
@@ -16,9 +16,11 @@ app.listen(3000, () => {
   console.log("Web server started");
 });
 
+// حدث تسجيل الدخول
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 
+  // قائمة الأنشطة اللي تتحوّل تلقائيًا
   const activities = [
     { name: "TikTok Skits", type: "WATCHING" },
     { name: "Rap Beats", type: "LISTENING" },
@@ -28,21 +30,26 @@ client.once("ready", () => {
 
   let i = 0;
 
-  setInterval(() => {
-    client.user.setActivity(activities[i].name, { type: activities[i].type });
-    i = (i + 1) % activities.length;
-  }, 60000);
-
+  // Activity الأول يظهر مباشرة
   client.user.setActivity(activities[0].name, { type: activities[0].type });
-});
 
+  // تبديل Activity كل دقيقة
+  setInterval(() => {
+    i = (i + 1) % activities.length;
+    client.user.setActivity(activities[i].name, { type: activities[i].type });
+  }, 60000); // 60000ms = 1 دقيقة
+});
 
 // أوامر البوت
 client.on("messageCreate", msg => {
   if (msg.content === "IP") {
     msg.reply("SOON");
   }
+
+  if (msg.content === "!ping") {
+    msg.reply("Pong! 🏓");
+  }
 });
 
-// تسجيل الدخول باستخدام التوكن
+// تسجيل الدخول بالتوكن (Environment Variable)
 client.login(process.env.TOKEN);
