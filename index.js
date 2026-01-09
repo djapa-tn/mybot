@@ -20,24 +20,8 @@ app.listen(3000, () => {
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 
-client.once("ready", () => {
-  console.log(`Logged in as ${client.user.tag}`);
-
   // Activity ثابت
   client.user.setActivity("TikTok Skits", { type: "WATCHING" });
-});
-
-
-  let i = 0;
-
-  // Activity الأول يظهر مباشرة
-  client.user.setActivity(activities[0].name, { type: activities[0].type });
-
-  // تبديل Activity كل دقيقة
-  setInterval(() => {
-    i = (i + 1) % activities.length;
-    client.user.setActivity(activities[i].name, { type: activities[i].type });
-  }, 60000); // 60000ms = 1 دقيقة
 });
 
 // أوامر البوت
@@ -51,6 +35,5 @@ client.on("messageCreate", msg => {
   }
 });
 
-// تسجيل الدخول بالتوكن (Environment Variable)
+// تسجيل الدخول بالتوكن من Environment Variable
 client.login(process.env.TOKEN);
-
