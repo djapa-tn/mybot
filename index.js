@@ -16,12 +16,17 @@ app.listen(3000, () => {
 
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
+
+  // Activity Status
+  client.user.setActivity("TikTok Skits", { type: "WATCHING" });
 });
 
+
 client.on("messageCreate", msg => {
-  if (msg.content === "salem") {
-    msg.reply("Salem ya bro 😎");
+  if (msg.content === "IP") {
+    msg.reply("SOON");
   }
 });
+
 
 client.login(process.env.TOKEN);
