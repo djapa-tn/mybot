@@ -16,10 +16,11 @@ app.listen(3000, () => {
   console.log("Web server started");
 });
 
-client.once("ready", () => {
+client.once("clientReady", () => {
   console.log(`Logged in as ${client.user.tag}`);
   client.user.setActivity("TikTok Skits", { type: "WATCHING" });
 });
+
 
 
 // أوامر البوت
@@ -31,4 +32,5 @@ client.on("messageCreate", msg => {
 
 // تسجيل الدخول باستخدام التوكن
 client.login(process.env.TOKEN);
+
 
