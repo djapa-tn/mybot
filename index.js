@@ -20,13 +20,13 @@ app.listen(3000, () => {
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 
-  // قائمة الأنشطة اللي تتحوّل تلقائيًا
-  const activities = [
-    { name: "TikTok Skits", type: "WATCHING" },
-    { name: "Rap Beats", type: "LISTENING" },
-    { name: "with Node.js", type: "PLAYING" },
-    { name: "Competition", type: "COMPETING" }
-  ];
+client.once("ready", () => {
+  console.log(`Logged in as ${client.user.tag}`);
+
+  // Activity ثابت
+  client.user.setActivity("TikTok Skits", { type: "WATCHING" });
+});
+
 
   let i = 0;
 
@@ -53,3 +53,4 @@ client.on("messageCreate", msg => {
 
 // تسجيل الدخول بالتوكن (Environment Variable)
 client.login(process.env.TOKEN);
+
