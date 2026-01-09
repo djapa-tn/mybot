@@ -4,7 +4,7 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds]
 });
 
-const FIVEM_SERVER = "http://IP_SERVER:PORT/players.json";
+const FIVEM_SERVER = "http://8142/players.json";
 
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
@@ -30,3 +30,4 @@ client.once("ready", () => {
 });
 
 client.login(process.env.TOKEN);
+
