@@ -1,39 +1,33 @@
 const { Client, GatewayIntentBits } = require("discord.js");
-const express = require("express");
-const app = express();
-
-// إنشاء البوت
+const fetch = require("node-fetch"); // لازم تثبت node-fetch
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+  intents: [GatewayIntentBits.Guilds]
 });
 
-// Express Web Server
-app.get("/", (req, res) => {
-  res.send("Bot is running...");
-});
+const FIVEM_SERVER = "http://IP_SERVER:PORT/players.json";
 
-app.listen(3000, () => {
-  console.log("Web server started");
-});
-
-// حدث تسجيل الدخول
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 
-  // Activity ثابت
-  client.user.setActivity("TikTok Skits", { type: "WATCHING" });
-});
+  async function updateActivity() {
+    try {
+      const res = await fetch(FIVEM_SERVER);
+      const players = await res.json();
+      const playerCount = players.length;
 
-// أوامر البوت
-client.on("messageCreate", msg => {
-  if (msg.content === "IP") {
-    msg.reply("SOON");
+      client.user.setActivity(`🟢 ${playerCount} Players on Server`, { type: "PLAYING" });
+    } catch (err) {
+      console.error("Error fetching FiveM data:", err);
+      client.user.setActivity("Server Offline", { type: "PLAYING" });
+    }
   }
 
-  if (msg.content === "!ping") {
-    msg.reply("Pong! 🏓");
-  }
+  // أول تحديث
+  updateActivity();
+
+  // تحديث كل دقيقة
+  setInterval(updateActivity, 60000);
 });
 
-// تسجيل الدخول بالتوكن من Environment Variable
-client.login(process.env.TOKEN);
+client.login("ODQxNDc0ODU0ODAwMzI2NjY3.GpOXtB.yTqvSWjSkLRUBjdxtShH25uOlrrhp-kDzXkMV8");
+
