@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits } = require("discord.js");
-const fetch = require("node-fetch"); // لازم node-fetch v2
+const fetch = require("node-fetch");
 const express = require("express");
 const app = express();
 
@@ -7,12 +7,12 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
 });
 
-// Express Web Server
+// Express server
 app.get("/", (req, res) => res.send("Bot is running..."));
 app.listen(3000, () => console.log("Web server started"));
 
-// FiveM server info
-const FIVEM_SERVER = "http://IP_SERVER:8142/players.json"; // عوض IP + PORT متاع سيرفرك
+// FiveM server IP + PORT
+const FIVEM_SERVER = "http://IP_SERVER:PORT/players.json"; // عوض IP + PORT
 
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
@@ -22,7 +22,6 @@ client.once("ready", () => {
       const res = await fetch(FIVEM_SERVER);
       const players = await res.json();
       const playerCount = players.length;
-
       client.user.setActivity(`🟢 ${playerCount} Players on Server`, { type: "PLAYING" });
     } catch (err) {
       console.error("Error fetching FiveM data:", err);
@@ -30,19 +29,15 @@ client.once("ready", () => {
     }
   }
 
-  // تحديث أول مرة
   updateActivity();
-
-  // تحديث كل دقيقة
   setInterval(updateActivity, 60000);
 });
 
-// أوامر البوت
+// Commands
 client.on("messageCreate", msg => {
   if (msg.content === "IP") msg.reply("SOON");
   if (msg.content === "!ping") msg.reply("Pong! 🏓");
 });
 
-// تسجيل الدخول بالتوكن (Environment Variable)
+// Login with token
 client.login(process.env.TOKEN);
-
