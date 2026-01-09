@@ -12,7 +12,7 @@ app.get("/", (req, res) => res.send("Bot is running..."));
 app.listen(3000, () => console.log("Web server started"));
 
 // FiveM server info
-const FIVEM_SERVER = "http://IP_SERVER:PORT/players.json"; // عوض IP + PORT متاع سيرفرك
+const FIVEM_SERVER = "http://IP_SERVER:8142/players.json"; // عوض IP + PORT متاع سيرفرك
 
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
@@ -45,3 +45,4 @@ client.on("messageCreate", msg => {
 
 // تسجيل الدخول بالتوكن (Environment Variable)
 client.login(process.env.TOKEN);
+
