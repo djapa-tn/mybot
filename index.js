@@ -29,5 +29,4 @@ client.once("ready", () => {
   setInterval(updateActivity, 60000);
 });
 
-client.login("ODQxNDc0ODU0ODAwMzI2NjY3.GpOXtB.yTqvSWjSkLRUBjdxtShH25uOlrrhp-kDzXkMV8");
-
+client.login(process.env.TOKEN);
